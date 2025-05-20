@@ -5,18 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Demo Video</title>
     <style>
-        /* Modern, clean styling */
+        /* Modern, clean styling with theme variables */
+        :root {
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #fff;
+            --bg-tertiary: #f1f5f9;
+            --text-primary: #333;
+            --text-secondary: #4a5568;
+            --text-heading: #2d3748;
+            --badge-bg: #e2e8f0;
+            --badge-text: #4a5568;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --button-primary: #3182ce;
+            --button-primary-hover: #2c5282;
+            --button-secondary: #a0aec0;
+            --button-secondary-hover: #718096;
+        }
+        
+        [data-theme="dark"] {
+            --bg-primary: #1a202c;
+            --bg-secondary: #2d3748;
+            --bg-tertiary: #2c3544;
+            --text-primary: #e2e8f0;
+            --text-secondary: #cbd5e0;
+            --text-heading: #f7fafc;
+            --badge-bg: #4a5568;
+            --badge-text: #e2e8f0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --button-primary: #4299e1;
+            --button-primary-hover: #3182ce;
+            --button-secondary: #718096;
+            --button-secondary-hover: #4a5568;
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
         }
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background-color: #f8f9fa;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
             padding: 20px;
         }
         
@@ -24,9 +57,9 @@
             max-width: 1000px;
             margin: 0 auto;
             padding: 40px 20px;
-            background-color: white;
+            background-color: var(--bg-secondary);
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow);
         }
         
         header {
@@ -37,14 +70,14 @@
         h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
-            color: #2d3748;
+            color: var(--text-heading);
         }
         
         .description {
             max-width: 800px;
             margin: 0 auto 30px;
             text-align: center;
-            color: #4a5568;
+            color: var(--text-secondary);
             font-size: 1.1rem;
         }
         
@@ -67,7 +100,7 @@
         }
         
         .project-details {
-            background-color: #f1f5f9;
+            background-color: var(--bg-tertiary);
             padding: 25px;
             border-radius: 8px;
             margin-bottom: 30px;
@@ -75,7 +108,7 @@
         
         h2 {
             margin-bottom: 15px;
-            color: #2d3748;
+            color: var(--text-heading);
         }
         
         ul {
@@ -95,8 +128,8 @@
         }
         
         .tech-badge {
-            background-color: #e2e8f0;
-            color: #4a5568;
+            background-color: var(--badge-bg);
+            color: var(--badge-text);
             padding: 5px 12px;
             border-radius: 20px;
             font-size: 0.9rem;
@@ -112,7 +145,7 @@
         
         .button {
             display: inline-block;
-            background-color: #3182ce;
+            background-color: var(--button-primary);
             color: white;
             padding: 12px 24px;
             border-radius: 6px;
@@ -122,22 +155,94 @@
         }
         
         .button:hover {
-            background-color: #2c5282;
+            background-color: var(--button-primary-hover);
         }
         
         .button.secondary {
-            background-color: #a0aec0;
+            background-color: var(--button-secondary);
         }
         
         .button.secondary:hover {
-            background-color: #718096;
+            background-color: var(--button-secondary-hover);
         }
         
         footer {
             text-align: center;
             margin-top: 40px;
-            color: #718096;
+            color: var(--text-secondary);
             font-size: 0.9rem;
+        }
+        
+        /* Theme toggle styles */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: var(--bg-secondary);
+            border-radius: 30px;
+            padding: 5px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+        }
+        
+        .theme-toggle label {
+            width: 60px;
+            height: 30px;
+            position: relative;
+            display: block;
+            background: #ebebeb;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
+        .theme-toggle label:after {
+            content: "";
+            width: 24px;
+            height: 24px;
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            background: #fff;
+            border-radius: 50%;
+            transition: 0.3s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .theme-toggle input {
+            position: absolute;
+            left: -9999px;
+        }
+        
+        .theme-toggle input:checked + label {
+            background: #4299e1;
+        }
+        
+        .theme-toggle input:checked + label:after {
+            left: calc(100% - 5px);
+            transform: translateX(-100%);
+        }
+        
+        .theme-toggle .toggle-icons {
+            position: absolute;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 8px;
+            box-sizing: border-box;
+            top: 6px;
+            z-index: -1;
+        }
+        
+        .theme-toggle .toggle-icons span {
+            font-size: 14px;
+        }
+        
+        .theme-title {
+            margin-right: 10px;
+            font-weight: 500;
+            color: var(--text-secondary);
         }
         
         @media (max-width: 768px) {
@@ -153,10 +258,27 @@
                 flex-direction: column;
                 align-items: center;
             }
+            
+            .theme-toggle {
+                top: 10px;
+                right: 10px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Theme Toggle Switch -->
+    <div class="theme-toggle">
+        <span class="theme-title">Theme</span>
+        <input type="checkbox" id="theme-switch" />
+        <label for="theme-switch">
+            <div class="toggle-icons">
+                <span>☀️</span>
+                <span>🌙</span>
+            </div>
+        </label>
+    </div>
+    
     <div class="container">
         <header>
             <h1>Project Demo: E-commerce Analytics Dashboard</h1>
@@ -205,5 +327,40 @@
             <p>© 2025 Sruti Dash. All rights reserved.</p>
         </footer>
     </div>
+    
+    <script>
+        // Theme toggle functionality
+        const toggleSwitch = document.getElementById('theme-switch');
+        const currentTheme = localStorage.getItem('theme');
+        
+        // Check for saved theme preference or use preferred color scheme
+        if (currentTheme) {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            if (currentTheme === 'dark') {
+                toggleSwitch.checked = true;
+            }
+        } else {
+            // Check if user prefers dark mode
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                toggleSwitch.checked = true;
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+        
+        // Function to switch theme
+        function switchTheme(e) {
+            if (e.target.checked) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+        
+        // Event listener for theme toggle
+        toggleSwitch.addEventListener('change', switchTheme, false);
+    </script>
 </body>
 </html>
